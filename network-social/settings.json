@@ -6,5 +6,6 @@
     "javascript",
     "typescript"
   ],
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "eslint.alwaysShowStatus": true
 }
