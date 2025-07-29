@@ -1,5 +1,5 @@
-import { prismaClient } from "../lib/prismaClient";
-import { ISignUpPayload } from "../../types/SignUpPayload";
+import { prismaClient } from "../../lib/prismaClient";
+import { ISignUpPayload } from "../../../types/SignUpPayload";
 
 export class UserRepository {
   async findByEmail(email: string) {
@@ -8,5 +8,9 @@ export class UserRepository {
 
   async create({ name, email, password }: ISignUpPayload) {
     return prismaClient.user.create({ data: { name, email, password } });
+  }
+
+  async findById(id: number) {
+    return await prismaClient.user.findUnique({ where: { id } });
   }
 }

@@ -1,7 +1,7 @@
-import { ISignUpPayload } from "../../types/SignUpPayload";
-import { AccountAlreadyExists } from "../errors/AccountAlreadyExists";
+import { ISignUpPayload } from "../../../types/SignUpPayload";
+import { AccountAlreadyExists } from "../../errors/AccountAlreadyExists";
 import { hash } from "bcryptjs";
-import { UserRepository } from "../repositories/UserRepository";
+import { UserRepository } from "../../repositories/postgres/UserRepository";
 
 type IOutput = void;
 

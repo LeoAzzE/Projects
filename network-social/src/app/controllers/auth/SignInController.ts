@@ -1,7 +1,8 @@
 import z, { ZodError } from "zod";
-import { IController, IRequest, IResponse } from "../interfaces/IController";
-import { SignInUseCase } from "../useCases/SignInUseCase";
-import { InvalidCredentials } from "../errors/InvalidCredentials";
+import { IController, IRequest, IResponse } from "../../interfaces/IController";
+
+import { InvalidCredentials } from "../../errors/InvalidCredentials";
+import { SignInUseCase } from "../../useCases/auth/SignInUseCase";
 
 const schema = z.object({
   email: z.email().min(1),

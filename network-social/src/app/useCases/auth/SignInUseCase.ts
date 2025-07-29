@@ -1,9 +1,9 @@
 import { compare } from "bcryptjs";
-import { InvalidCredentials } from "../errors/InvalidCredentials";
-import { prismaClient } from "../lib/prismaClient";
+import { InvalidCredentials } from "../../errors/InvalidCredentials";
+import { prismaClient } from "../../lib/prismaClient";
 import { sign } from "jsonwebtoken";
-import { env } from "../config/env";
-import { UserRepository } from "../repositories/UserRepository";
+import { env } from "../../config/env";
+import { UserRepository } from "../../repositories/postgres/UserRepository";
 
 interface IInput {
   email: string;
