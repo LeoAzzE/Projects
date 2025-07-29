@@ -1,13 +1,19 @@
 import { PostgresCreatePostRepository } from "../../repositories/postgres/posts/createPostRepository";
 import { UserRepository } from "../../repositories/postgres/UserRepository";
 
+interface IPost {
+  content: string;
+  imageUrl?: string;
+  authorId?: number;
+}
+
 export class CreatePostUseCase {
   constructor(
     private readonly postgresCreatePostRepository: PostgresCreatePostRepository,
     private readonly userRepository: UserRepository
   ) {}
 
-  async execute({ content, imageUrl, authorId }) {
+  async execute({ content, imageUrl, authorId }: IPost) {
     if (!content?.trim()) {
       throw new Error("O conteúdo do post não pode ser vazio.");
     }

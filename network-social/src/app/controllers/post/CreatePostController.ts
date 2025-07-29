@@ -5,20 +5,19 @@ import { CreatePostUseCase } from "../../useCases/posts/CreatePostUseCase";
 const schema = z.object({
   content: z.string().min(1).max(1000),
   imageUrl: z.string().optional(),
-  authorId: z.number().int().positive(),
 });
 
 export class CreatePostController implements IController {
   constructor(private readonly createPostUseCase: CreatePostUseCase) {}
 
-  async handle({ body }: IRequest): Promise<IResponse> {
+  async handle({ body, accountId }: IRequest): Promise<IResponse> {
     try {
-      const { content, imageUrl, authorId } = schema.parse(body);
+      const { content, imageUrl } = schema.parse(body);
 
       const post = await this.createPostUseCase.execute({
         content,
         imageUrl,
-        authorId,
+        authorId: accountId,
       });
 
       return {
