@@ -1,13 +1,17 @@
 import express from "express";
 import { routeAdapter } from "./adapters/routeAdapter";
+
+import { middlewareAdapter } from "./adapters/middlewareAdapter";
 import {
   makeAuthenticationMiddleware,
   makeMeController,
-  makeSignInController,
   makeSignUpController,
+  makeSignInController,
 } from "../app/factories/controllers/auth";
-import { makeCreatePostController } from "../app/factories/controllers/post";
-import { middlewareAdapter } from "./adapters/middlewareAdapter";
+import {
+  makeCreatePostController,
+  makeDeletePostController,
+} from "../app/factories/controllers/post";
 
 const app = express();
 
@@ -25,6 +29,12 @@ app.post(
   "/post",
   middlewareAdapter(makeAuthenticationMiddleware()),
   routeAdapter(makeCreatePostController())
+);
+
+app.delete(
+  "/post/:postId",
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  routeAdapter(makeDeletePostController())
 );
 
 app.listen(3001, () => {

@@ -1,3 +1,3 @@
 export class AccountAlreadyExists extends Error {
-  name = "AccountAlreadyExists";
+  override name = "AccountAlreadyExists";
 }

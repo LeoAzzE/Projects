@@ -1,18 +1,16 @@
 import z, { ZodError } from "zod";
 import { IController, IRequest, IResponse } from "../../interfaces/IController";
 import { CreatePostUseCase } from "../../useCases/posts/CreatePostUseCase";
+import { Schema } from "../../kernel/decorators/Schema";
+import { createPostSchema } from "./schemas/createPostSchema";
 
-const schema = z.object({
-  content: z.string().min(1).max(1000),
-  imageUrl: z.string().optional(),
-});
-
+@Schema(createPostSchema)
 export class CreatePostController implements IController {
   constructor(private readonly createPostUseCase: CreatePostUseCase) {}
 
   async handle({ body, accountId }: IRequest): Promise<IResponse> {
     try {
-      const { content, imageUrl } = schema.parse(body);
+      const { content, imageUrl } = createPostSchema.parse(body);
 
       const post = await this.createPostUseCase.execute({
         content,
