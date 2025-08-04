@@ -7,6 +7,7 @@ import {
   makeMeController,
   makeSignUpController,
   makeSignInController,
+  makeAuthorizationMiddleware,
 } from "../app/factories/controllers/auth";
 import {
   makeCreatePostController,
@@ -25,6 +26,7 @@ app.get(
 
 app.post("/sign-up", routeAdapter(makeSignUpController()));
 app.post("/sign-in", routeAdapter(makeSignInController()));
+
 app.post(
   "/post",
   middlewareAdapter(makeAuthenticationMiddleware()),
@@ -35,6 +37,16 @@ app.delete(
   "/post/:postId",
   middlewareAdapter(makeAuthenticationMiddleware()),
   routeAdapter(makeDeletePostController())
+);
+
+//ADMIN
+app.get(
+  "/listPosts",
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  middlewareAdapter(makeAuthorizationMiddleware(["ADMIN"])),
+  async (req, res) => {
+    res.json({ created: true });
+  }
 );
 
 app.listen(3001, () => {

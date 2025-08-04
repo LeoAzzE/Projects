@@ -1,3 +1,4 @@
+import { IAccount } from "../../../types/Role";
 import { PostNotFound } from "../../errors/PostNotFound";
 import { PostgresDeletePostRepository } from "../../repositories/postgres/posts/deletePostRepository";
 import { PostgresGetPostByIdRepository } from "../../repositories/postgres/posts/getPostByIdRepository";
@@ -7,14 +8,15 @@ export class DeletePostUseCase {
     private readonly postgresDeletePostRepository: PostgresDeletePostRepository,
     private readonly postgresGetPostByIdRepository: PostgresGetPostByIdRepository
   ) {}
-  async execute(postId: number, accountId: number | undefined) {
+  async execute(postId: number, account: IAccount) {
+    console.log(account);
     const post = await this.postgresGetPostByIdRepository.execute(postId);
 
     if (!post) {
       throw new PostNotFound();
     }
 
-    if (post.authorId !== accountId) {
+    if (post.authorId !== account.id && account.role !== "ADMIN") {
       throw new PostNotFound();
     }
 

@@ -1,4 +1,4 @@
-import { ISignUpPayload } from "../../../types/SignUpPayload";
+import { ISignUpInput } from "../../../types/SignUpPayload";
 import { AccountAlreadyExists } from "../../errors/AccountAlreadyExists";
 import { hash } from "bcryptjs";
 import { UserRepository } from "../../repositories/postgres/UserRepository";
@@ -7,7 +7,7 @@ type IOutput = void;
 
 export class SignUpUseCase {
   constructor(private readonly userRepository: UserRepository) {}
-  async execute({ email, name, password }: ISignUpPayload): Promise<IOutput> {
+  async execute({ email, name, password }: ISignUpInput): Promise<IOutput> {
     const accountAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (accountAlreadyExists) {
@@ -20,6 +20,7 @@ export class SignUpUseCase {
       email,
       name,
       password: hashedPassword,
+      role: "USER",
     });
   }
 }

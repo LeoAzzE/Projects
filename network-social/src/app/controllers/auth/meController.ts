@@ -1,15 +1,16 @@
-import { IController, IRequest, IResponse } from "../../interfaces/IController";
+import { IController, IResponse } from "../../interfaces/IController";
+import { IRequest } from "../../interfaces/IRequest";
 import { UserRepository } from "../../repositories/postgres/UserRepository";
 
 export class MeController implements IController {
   constructor(private userRepository: UserRepository) {}
 
-  async handle({ accountId }: IRequest): Promise<IResponse> {
-    if (!accountId) {
+  async handle({ account }: IRequest): Promise<IResponse> {
+    if (!account?.id) {
       return { statusCode: 401, body: { error: "Unauthorized" } };
     }
 
-    const user = await this.userRepository.findById(accountId);
+    const user = await this.userRepository.findById(account.id);
     if (!user) {
       return { statusCode: 404, body: { error: "User not found" } };
     }

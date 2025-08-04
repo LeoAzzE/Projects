@@ -1,11 +1,13 @@
 import { PostNotFound } from "../../errors/PostNotFound";
-import { IController, IRequest, IResponse } from "../../interfaces/IController";
+import { IController, IResponse } from "../../interfaces/IController";
 import { DeletePostUseCase } from "../../useCases/posts/DeletePostUseCase";
+import { IRequest } from "../../interfaces/IRequest";
+import { IAccount } from "../../../types/Role";
 
 export class DeletePostController implements IController {
   constructor(private readonly deletePostUseCase: DeletePostUseCase) {}
 
-  async handle({ params, accountId }: IRequest): Promise<IResponse> {
+  async handle({ params, account }: IRequest): Promise<IResponse> {
     try {
       const postId = params?.postId;
 
@@ -16,7 +18,7 @@ export class DeletePostController implements IController {
         };
       }
 
-      await this.deletePostUseCase.execute(postId, accountId);
+      await this.deletePostUseCase.execute(postId, account as IAccount);
       return {
         statusCode: 204,
         body: null,

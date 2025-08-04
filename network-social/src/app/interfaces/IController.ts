@@ -1,8 +1,4 @@
-export interface IRequest {
-  body: Record<string, any>;
-  params: Record<string, any>;
-  accountId: number | undefined;
-}
+import { IRequest } from "./IRequest";
 
 export interface IResponse {
   statusCode: number;
@@ -12,3 +8,4 @@ export interface IResponse {
 export interface IController {
   handle(request: IRequest): Promise<IResponse>;
 }
+export { IRequest };

@@ -4,6 +4,9 @@ import { NextFunction, Request, Response } from "express";
 export function middlewareAdapter(middleware: IMiddleware) {
   return async (request: Request, response: Response, next: NextFunction) => {
     const result = await middleware.handle({
+      body: request.body,
+      params: request.params,
+      account: request.metadata?.account,
       headers: request.headers as Record<string, string>,
     });
 

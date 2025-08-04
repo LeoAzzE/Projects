@@ -1,6 +1,4 @@
-export interface IRequest {
-  headers: Record<string, string>;
-}
+import { IRequest } from "./IRequest";
 
 export interface IResponse {
   statusCode: number;
@@ -14,3 +12,4 @@ export interface IData {
 export interface IMiddleware {
   handle(request: IRequest): Promise<IResponse | IData>;
 }
+export { IRequest };

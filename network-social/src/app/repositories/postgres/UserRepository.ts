@@ -6,8 +6,11 @@ export class UserRepository {
     return prismaClient.user.findUnique({ where: { email } });
   }
 
-  async create({ name, email, password }: ISignUpPayload) {
-    return prismaClient.user.create({ data: { name, email, password } });
+  async create({ name, email, password, role }: ISignUpPayload) {
+    console.log(name, email, password, role);
+    return prismaClient.user.create({
+      data: { name, email, password, role: role },
+    });
   }
 
   async findById(id: number) {

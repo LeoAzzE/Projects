@@ -1,7 +1,8 @@
 import z, { ZodError } from "zod";
 import { SignUpUseCase } from "../../useCases/auth/SignUpUseCase";
 import { AccountAlreadyExists } from "../../errors/AccountAlreadyExists";
-import { IController, IRequest, IResponse } from "../../interfaces/IController";
+import { IController, IResponse } from "../../interfaces/IController";
+import { IRequest } from "../../interfaces/IRequest";
 import { Schema } from "../../kernel/decorators/Schema";
 import { signUpSchema } from "./schemas/signUpSchema";
 

@@ -2,6 +2,7 @@ import { MeController } from "../../controllers/auth/meController";
 import { SignInController } from "../../controllers/auth/SignInController";
 import { SignUpController } from "../../controllers/auth/SignUpController";
 import { AuthenticationMiddleware } from "../../middlewares/AuthenticationMiddleware";
+import { AuthorizationMiddleware } from "../../middlewares/AuthorizationMiddleware";
 import { UserRepository } from "../../repositories/postgres/UserRepository";
 import { SignInUseCase } from "../../useCases/auth/SignInUseCase";
 import { SignUpUseCase } from "../../useCases/auth/SignUpUseCase";
@@ -26,4 +27,8 @@ export function makeMeController() {
 
 export function makeAuthenticationMiddleware() {
   return new AuthenticationMiddleware();
+}
+
+export function makeAuthorizationMiddleware(allowedRoles: string[]) {
+  return new AuthorizationMiddleware(allowedRoles);
 }
