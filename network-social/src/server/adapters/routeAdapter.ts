@@ -1,15 +1,37 @@
 import { Request, Response } from "express";
-import { IController } from "../../app/interfaces/IController";
+import { Controller } from "../../app/contracts/Controller";
+import { ZodError } from "zod";
 
-export function routeAdapter(controller: IController) {
+export function routeAdapter(controller: Controller) {
   return async (request: Request, response: Response) => {
-    const { statusCode, body } = await controller.handle({
-      body: request.body,
-      params: request.params,
-      account: request.metadata?.account,
-      headers: request.headers as Record<string, string>,
-    });
+    try {
+      const { statusCode, body } = await controller.execute({
+        body: request.body,
+        params: request.params,
+        account: request.metadata?.account,
+        headers: request.headers as Record<string, string>,
+      });
+      response.status(statusCode).json(body);
+    } catch (error) {
+      // Erros de validação (Zod)
+      if (error instanceof ZodError) {
+        return response.status(400).json({
+          error: "Validation failed",
+          details: error.issues, // ou error.issues no seu Zod
+        });
+      }
 
-    response.status(statusCode).json(body);
+      // Qualquer outro erro conhecido (pode customizar mais, se quiser)
+      if (error instanceof Error) {
+        return response.status(500).json({
+          error: error.message,
+        });
+      }
+
+      // Se for algum erro totalmente fora do padrão
+      return response.status(500).json({
+        error: "Internal server error",
+      });
+    }
   };
 }

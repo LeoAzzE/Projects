@@ -4,14 +4,17 @@ import { CreatePostUseCase } from "../../useCases/posts/CreatePostUseCase";
 import { Schema } from "../../kernel/decorators/Schema";
 import { IRequest } from "../../interfaces/IRequest";
 import { createPostSchema } from "./schemas/createPostSchema";
+import { Controller } from "../../contracts/Controller";
 
 @Schema(createPostSchema)
-export class CreatePostController implements IController {
-  constructor(private readonly createPostUseCase: CreatePostUseCase) {}
+export class CreatePostController extends Controller {
+  constructor(private readonly createPostUseCase: CreatePostUseCase) {
+    super();
+  }
 
   async handle({ body, account }: IRequest): Promise<IResponse> {
     try {
-      const { content, imageUrl } = createPostSchema.parse(body);
+      const { content, imageUrl } = body;
 
       const post = await this.createPostUseCase.execute({
         content,

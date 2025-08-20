@@ -5,10 +5,13 @@ import { InvalidCredentials } from "../../errors/InvalidCredentials";
 import { SignInUseCase } from "../../useCases/auth/SignInUseCase";
 import { Schema } from "../../kernel/decorators/Schema";
 import { signInSchema } from "./schemas/signInSchema";
+import { Controller } from "../../contracts/Controller";
 
 @Schema(signInSchema)
-export class SignInController implements IController {
-  constructor(private readonly signInUseCase: SignInUseCase) {}
+export class SignInController extends Controller {
+  constructor(private readonly signInUseCase: SignInUseCase) {
+    super();
+  }
   async handle({ body }: IRequest): Promise<IResponse> {
     try {
       const { email, password } = signInSchema.parse(body);
