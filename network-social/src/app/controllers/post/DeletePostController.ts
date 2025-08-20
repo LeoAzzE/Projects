@@ -1,11 +1,14 @@
 import { PostNotFound } from "../../errors/PostNotFound";
-import { IController, IResponse } from "../../interfaces/IController";
 import { DeletePostUseCase } from "../../useCases/posts/DeletePostUseCase";
+import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { IAccount } from "../../../types/Role";
+import { Controller } from "../../contracts/Controller";
 
-export class DeletePostController implements IController {
-  constructor(private readonly deletePostUseCase: DeletePostUseCase) {}
+export class DeletePostController extends Controller {
+  constructor(private readonly deletePostUseCase: DeletePostUseCase) {
+    super();
+  }
 
   async handle({ params, account }: IRequest): Promise<IResponse> {
     try {

@@ -1,14 +1,17 @@
 import z, { ZodError } from "zod";
 import { SignUpUseCase } from "../../useCases/auth/SignUpUseCase";
 import { AccountAlreadyExists } from "../../errors/AccountAlreadyExists";
-import { IController, IResponse } from "../../interfaces/IController";
+import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { Schema } from "../../kernel/decorators/Schema";
 import { signUpSchema } from "./schemas/signUpSchema";
+import { Controller } from "../../contracts/Controller";
 
 @Schema(signUpSchema)
-export class SignUpController implements IController {
-  constructor(private readonly signUpUseCase: SignUpUseCase) {}
+export class SignUpController extends Controller {
+  constructor(private readonly signUpUseCase: SignUpUseCase) {
+    super();
+  }
   async handle({ body }: IRequest): Promise<IResponse> {
     try {
       const { email, name, password } = signUpSchema.parse(body);

@@ -1,10 +1,9 @@
-import z, { ZodError } from "zod";
-import { IController, IResponse } from "../../interfaces/IController";
+import { IResponse } from "../../interfaces/IMiddleware";
+import { IRequest } from "../../interfaces/IRequest";
 import { CreatePostUseCase } from "../../useCases/posts/CreatePostUseCase";
 import { Schema } from "../../kernel/decorators/Schema";
-import { IRequest } from "../../interfaces/IRequest";
-import { createPostSchema } from "./schemas/createPostSchema";
 import { Controller } from "../../contracts/Controller";
+import { createPostSchema } from "./schemas/createPostSchema";
 
 @Schema(createPostSchema)
 export class CreatePostController extends Controller {
@@ -12,7 +11,7 @@ export class CreatePostController extends Controller {
     super();
   }
 
-  async handle({ body, account }: IRequest): Promise<IResponse> {
+  protected async handle({ body, account }: IRequest): Promise<IResponse> {
     try {
       const { content, imageUrl } = body;
 
@@ -27,13 +26,6 @@ export class CreatePostController extends Controller {
         body: post,
       };
     } catch (error) {
-      if (error instanceof ZodError) {
-        return {
-          statusCode: 400,
-          body: error.issues,
-        };
-      }
-
       if (
         error instanceof Error &&
         [

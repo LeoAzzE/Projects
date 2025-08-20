@@ -1,9 +1,13 @@
-import { IController, IResponse } from "../../interfaces/IController";
+import { Controller } from "../../contracts/Controller";
+import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
+
 import { UserRepository } from "../../repositories/postgres/UserRepository";
 
-export class MeController implements IController {
-  constructor(private userRepository: UserRepository) {}
+export class MeController extends Controller {
+  constructor(private userRepository: UserRepository) {
+    super();
+  }
 
   async handle({ account }: IRequest): Promise<IResponse> {
     if (!account?.id) {

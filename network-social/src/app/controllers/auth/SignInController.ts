@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { IController, IResponse } from "../../interfaces/IController";
+import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { InvalidCredentials } from "../../errors/InvalidCredentials";
 import { SignInUseCase } from "../../useCases/auth/SignInUseCase";
