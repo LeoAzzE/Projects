@@ -12,6 +12,8 @@ import {
 import {
   makeCreatePostController,
   makeDeletePostController,
+  makeListPostsController,
+  makeUpdatePostController,
 } from "../app/factories/controllers/post";
 
 const app = express();
@@ -39,14 +41,18 @@ app.delete(
   routeAdapter(makeDeletePostController())
 );
 
+app.put(
+  "/post/:postId",
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  routeAdapter(makeUpdatePostController())
+);
+
 //ADMIN
 app.get(
   "/listPosts",
   middlewareAdapter(makeAuthenticationMiddleware()),
   middlewareAdapter(makeAuthorizationMiddleware(["ADMIN"])),
-  async (req, res) => {
-    res.json({ created: true });
-  }
+  routeAdapter(makeListPostsController())
 );
 
 app.listen(3001, () => {
