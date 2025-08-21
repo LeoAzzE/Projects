@@ -1,9 +1,10 @@
 import { PostNotFound } from "../../errors/PostNotFound";
 import { DeletePostUseCase } from "../../useCases/posts/DeletePostUseCase";
-import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { IAccount } from "../../../types/Role";
 import { Controller } from "../../contracts/Controller";
+import { IResponse } from "../../interfaces/IResponse";
+import { ZodError } from "zod";
 
 export class DeletePostController extends Controller {
   constructor(private readonly deletePostUseCase: DeletePostUseCase) {
@@ -27,6 +28,9 @@ export class DeletePostController extends Controller {
         body: null,
       };
     } catch (error) {
+      if (error instanceof ZodError) {
+        return { statusCode: 400, body: error.issues };
+      }
       if (error instanceof PostNotFound) {
         return {
           statusCode: 404,

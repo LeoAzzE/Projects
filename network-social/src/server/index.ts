@@ -1,7 +1,7 @@
 import express from "express";
-import { routeAdapter } from "./adapters/routeAdapter";
+import { routeAdapter } from "../main/adapters/routeAdapter";
 
-import { middlewareAdapter } from "./adapters/middlewareAdapter";
+import { middlewareAdapter } from "../main/adapters/middlewareAdapter";
 import {
   makeAuthenticationMiddleware,
   makeMeController,

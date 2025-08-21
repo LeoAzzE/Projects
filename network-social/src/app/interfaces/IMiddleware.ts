@@ -1,9 +1,5 @@
 import { IRequest } from "./IRequest";
-
-export interface IResponse {
-  statusCode: number;
-  body: Record<string, any> | null;
-}
+import { IResponse } from "./IResponse";
 
 export interface IData {
   data: Record<string, any>;
@@ -12,4 +8,3 @@ export interface IData {
 export interface IMiddleware {
   handle(request: IRequest): Promise<IResponse | IData>;
 }
-export { IRequest };

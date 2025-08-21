@@ -1,11 +1,11 @@
 import { ZodError } from "zod";
-import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { InvalidCredentials } from "../../errors/InvalidCredentials";
 import { SignInUseCase } from "../../useCases/auth/SignInUseCase";
 import { Schema } from "../../kernel/decorators/Schema";
 import { signInSchema } from "./schemas/signInSchema";
 import { Controller } from "../../contracts/Controller";
+import { IResponse } from "../../interfaces/IResponse";
 
 @Schema(signInSchema)
 export class SignInController extends Controller {

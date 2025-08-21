@@ -1,4 +1,3 @@
-import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { Controller } from "../../contracts/Controller";
 import { UpdatePostUseCase } from "../../useCases/posts/UpdatePostUseCase";
@@ -6,6 +5,7 @@ import { Schema } from "../../kernel/decorators/Schema";
 import { updatePostSchema } from "./schemas/updatePostSchema";
 import { IAccount } from "../../../types/Role";
 import { PostNotFound } from "../../errors/PostNotFound";
+import { IResponse } from "../../interfaces/IResponse";
 
 @Schema(updatePostSchema)
 export class UpdatePostController extends Controller {
@@ -38,15 +38,7 @@ export class UpdatePostController extends Controller {
       if (error instanceof PostNotFound) {
         return { statusCode: 404, body: { error: "Post not found." } };
       }
-      if (
-        error instanceof Error &&
-        [
-          "O conteúdo do post não pode ser vazio.",
-          "O conteúdo do post deve ter no máximo 1000 caracteres.",
-        ].includes(error.message)
-      ) {
-        return { statusCode: 400, body: { error: error.message } };
-      }
+
       throw error;
     }
   }

@@ -1,6 +1,6 @@
 import { Controller } from "../../contracts/Controller";
-import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
+import { IResponse } from "../../interfaces/IResponse";
 
 import { UserRepository } from "../../repositories/postgres/UserRepository";
 

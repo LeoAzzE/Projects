@@ -1,11 +1,11 @@
 import z, { ZodError } from "zod";
 import { SignUpUseCase } from "../../useCases/auth/SignUpUseCase";
 import { AccountAlreadyExists } from "../../errors/AccountAlreadyExists";
-import { IResponse } from "../../interfaces/IMiddleware";
 import { IRequest } from "../../interfaces/IRequest";
 import { Schema } from "../../kernel/decorators/Schema";
 import { signUpSchema } from "./schemas/signUpSchema";
 import { Controller } from "../../contracts/Controller";
+import { IResponse } from "../../interfaces/IResponse";
 
 @Schema(signUpSchema)
 export class SignUpController extends Controller {

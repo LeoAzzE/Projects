@@ -1,7 +1,8 @@
 import { JwtPayload, verify } from "jsonwebtoken";
-import { IData, IMiddleware, IResponse } from "../interfaces/IMiddleware";
+import { IData, IMiddleware } from "../interfaces/IMiddleware";
 import { IRequest } from "../interfaces/IRequest";
 import { env } from "../config/env";
+import { IResponse } from "../interfaces/IResponse";
 
 export class AuthenticationMiddleware implements IMiddleware {
   async handle({ headers }: IRequest): Promise<IResponse | IData> {
